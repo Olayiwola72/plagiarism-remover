@@ -46,9 +46,4 @@ public class ChatCompletion {
 	public void addMessages(ChatMessage message) {
 		this.messages.add(message);
 	}
-
-	@Override
-	public String toString() {
-		return "ChatCompletion [model=" + model + ", messages=" + messages + "]";
-	}
 }

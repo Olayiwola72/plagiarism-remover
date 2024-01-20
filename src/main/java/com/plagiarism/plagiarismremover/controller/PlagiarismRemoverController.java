@@ -16,7 +16,7 @@ import com.plagiarism.plagiarismremover.service.ChatGPTChatCompletionService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/plagiarism/v1")
+@RequestMapping("${plagiarism-remover.base-path}")
 @Validated
 public class PlagiarismRemoverController {
 	private final ChatGPTConfigProperties chatGPTconfig;
@@ -26,7 +26,11 @@ public class PlagiarismRemoverController {
 		this.chatGPTconfig = chatGPTconfig;
 	}
 	
-	@PostMapping("/remove")
+	public ChatGPTConfigProperties getChatGPTconfig() {
+		return this.chatGPTconfig;
+	}
+	
+	@PostMapping("${plagiarism-remover.endpoint.remove}")
 	public ResponseEntity<ChatCompletion> remove(@Valid @RequestBody ChatMessageRequest requestBody){
 		try {
 			// Process the received data

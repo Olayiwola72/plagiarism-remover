@@ -89,5 +89,5 @@ bin/
 target/
 
 # Spring Boot secret properties
-src/main/resources/secret.properties
+src/main/resources/secrets.properties
 >>>>>>> 3c1c128 (initial commit)

@@ -1,20 +1,19 @@
 package com.plagiarism.plagiarismremover.entity.errors;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
 import jakarta.persistence.Entity;
 
 @Entity
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class ErrorFields {
+public class ErrorField {
 	private String errorMessage;
 	private String fieldName;
 	
-	public ErrorFields() {}
+	public ErrorField(String errorMessage) {
+		this.setErrorMessage(errorMessage);
+	}
 	
-	public ErrorFields(String errorMessage, String fieldName) {
-		this.errorMessage = errorMessage;
-		this.fieldName = fieldName;
+	public ErrorField(String errorMessage, String fieldName) {
+		this.setErrorMessage(errorMessage);
+		this.setFieldName(fieldName);
 	}
 	
 	public String getErrorMessage() {

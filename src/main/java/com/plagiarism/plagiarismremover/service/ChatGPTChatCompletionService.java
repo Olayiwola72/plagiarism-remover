@@ -14,6 +14,10 @@ public class ChatGPTChatCompletionService {
 								);
 	}
 	
+	public ChatCompletion getChatCompletion() {
+		return this.chatCompletion;
+	}
+	
 	public ChatCompletion postChatCompletionRequest() {
 //		RestTemplate restTemplate = new RestTemplate();
 //
@@ -22,7 +26,7 @@ public class ChatGPTChatCompletionService {
 //	    headers.set("Authorization", "Bearer "+chatGPTconfig.getApiKey());  // Set the Authorization header
 
 
-//	    HttpEntity<ChatCompletion> request = new HttpEntity<>(this.getChatCompletionRequest(), headers);
+//	    HttpEntity<ChatCompletion> request = new HttpEntity<>(this.getChatCompletion(), headers);
 
 //	    ResponseEntity<ChatCompletion> response = restTemplate.postForEntity(chatGPTconfig.getApiUrl(), request, ChatCompletion.class);
 
