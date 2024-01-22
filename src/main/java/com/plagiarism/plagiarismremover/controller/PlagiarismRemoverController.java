@@ -13,37 +13,51 @@ import com.plagiarism.plagiarismremover.entity.ChatCompletion;
 import com.plagiarism.plagiarismremover.entity.ChatMessageRequest;
 import com.plagiarism.plagiarismremover.service.ChatGPTChatCompletionService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("${plagiarism-remover.base-path}")
 @Validated
+@Tag(name = "Plagiarism Remover", description = "Plagiarism Remover API")
 public class PlagiarismRemoverController {
 	private final ChatGPTConfigProperties chatGPTconfig;
 	private ChatGPTChatCompletionService chatGPTChatCompletionService;
-	
+
 	public PlagiarismRemoverController(ChatGPTConfigProperties chatGPTconfig) {
 		this.chatGPTconfig = chatGPTconfig;
 	}
-	
+
 	public ChatGPTConfigProperties getChatGPTconfig() {
 		return this.chatGPTconfig;
 	}
 	
+	@Operation(summary = "Remove plagiarism request to OpenAPI's ChatGPT Chat Completion Service")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Removed plagiarism", content = {
+			@Content(mediaType = "application/json", schema = @Schema(implementation = ChatMessageRequest.class)) }),
+			@ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Resource Not Found", content = @Content) 
+	})
 	@PostMapping("${plagiarism-remover.endpoint.remove}")
-	public ResponseEntity<ChatCompletion> remove(@Valid @RequestBody ChatMessageRequest requestBody){
+	public ResponseEntity<ChatCompletion> remove( @Valid @RequestBody ChatMessageRequest requestBody) {
 		try {
 			// Process the received data
-	        chatGPTChatCompletionService = new ChatGPTChatCompletionService(chatGPTconfig, requestBody.getMessage());	        
+			chatGPTChatCompletionService = new ChatGPTChatCompletionService(chatGPTconfig, requestBody.getMessage());
 
 //            if (rows != 0) {
-                return ResponseEntity.ok(chatGPTChatCompletionService.postChatCompletionRequest());
+			return ResponseEntity.ok(chatGPTChatCompletionService.postChatCompletionRequest());
 //            } else {
 //                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 //            }	
-		}catch (Exception e) {
-            // Handle exceptions, log them, and return an appropriate response
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+		} catch (Exception e) {
+			// Handle exceptions, log them, and return an appropriate response
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 }
