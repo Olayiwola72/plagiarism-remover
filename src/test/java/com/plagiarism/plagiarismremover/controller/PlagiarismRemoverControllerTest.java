@@ -1,4 +1,4 @@
-package com.plagiarism.plagiarismremover;
+package com.plagiarism.plagiarismremover.controller;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Import;
 
 import com.plagiarism.plagiarismremover.config.ChatGPTConfigProperties;
 import com.plagiarism.plagiarismremover.config.MessageSourceConfig;
-import com.plagiarism.plagiarismremover.controller.PlagiarismRemoverController;
 
 @WebMvcTest(PlagiarismRemoverController.class)
 @Import(MessageSourceConfig.class)

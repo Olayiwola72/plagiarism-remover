@@ -1,10 +1,15 @@
 package com.plagiarism.plagiarismremover.entity.errors;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 
 @Entity
+@Schema(description = "Error Response Field Information")
 public class ErrorField {
+	@Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "error Message", example = "field cannot be blank")
 	private String errorMessage;
+	
+	@Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "field Name", example = "message")
 	private String fieldName;
 	
 	public ErrorField(String errorMessage) {

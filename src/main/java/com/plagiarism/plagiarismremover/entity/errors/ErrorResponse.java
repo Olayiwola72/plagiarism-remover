@@ -3,7 +3,11 @@ package com.plagiarism.plagiarismremover.entity.errors;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Error Response Information")
 public class ErrorResponse {
+	@Schema(description = "errors")
 	private List<ErrorField> errors;
 
     public ErrorResponse() {

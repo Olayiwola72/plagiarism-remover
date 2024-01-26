@@ -2,11 +2,16 @@ package com.plagiarism.plagiarismremover.entity;
 
 import java.util.ArrayList;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 
 @Entity
+@Schema(description = "Chat Completion Information")
 public class ChatCompletion {
+	@Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "model", example = "gpt-3.5-turbo")
 	private String model;
+	
+	@Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "messages")
 	private ArrayList<ChatMessage> messages;
 	
 	public ChatCompletion() {

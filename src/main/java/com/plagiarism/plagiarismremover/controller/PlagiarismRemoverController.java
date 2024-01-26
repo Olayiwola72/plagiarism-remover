@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -27,6 +28,7 @@ import jakarta.validation.Valid;
 @Validated
 @Tag(name = "Plagiarism Remover", description = "Plagiarism Remover API")
 public class PlagiarismRemoverController {
+	
 	private final ChatGPTConfigProperties chatGPTconfig;
 	private ChatGPTChatCompletionService chatGPTChatCompletionService;
 
@@ -39,11 +41,10 @@ public class PlagiarismRemoverController {
 	}
 	
 	@Operation(summary = "Remove plagiarism request to OpenAPI's ChatGPT Chat Completion Service")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Removed plagiarism", content = {
-			@Content(mediaType = "application/json", schema = @Schema(implementation = ChatMessageRequest.class)) }),
-			@ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
-			@ApiResponse(responseCode = "404", description = "Resource Not Found", content = @Content) 
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Removed plagiarism succesfully", content = {
+			@Content(mediaType = "application/json", schema = @Schema(implementation = ChatCompletion.class)) }),
 	})
+	@SecurityRequirement(name = "Bearer Key", scopes = "read")
 	@PostMapping("${plagiarism-remover.endpoint.remove}")
 	public ResponseEntity<ChatCompletion> remove( @Valid @RequestBody ChatMessageRequest requestBody) {
 		try {
