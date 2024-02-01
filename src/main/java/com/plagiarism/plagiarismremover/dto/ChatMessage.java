@@ -1,9 +1,7 @@
-package com.plagiarism.plagiarismremover.entity;
+package com.plagiarism.plagiarismremover.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
 
-@Entity
 @Schema(description = "Chat Message Information")
 public class ChatMessage {
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "role", example = "user")

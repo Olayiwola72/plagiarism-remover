@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class DelegatedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 	private final HandlerExceptionResolver resolver;
-
+	
     public DelegatedAuthenticationEntryPoint(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         this.resolver = resolver;
     }

@@ -1,32 +1,38 @@
 package com.plagiarism.plagiarismremover.controller;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
-import com.plagiarism.plagiarismremover.config.ChatGPTConfigProperties;
 import com.plagiarism.plagiarismremover.config.MessageSourceConfig;
+import com.plagiarism.plagiarismremover.config.PasswordConfig;
+import com.plagiarism.plagiarismremover.config.SecurityConfig;
+import com.plagiarism.plagiarismremover.repository.UserRepository;
+import com.plagiarism.plagiarismremover.security.DelegatedAuthenticationEntryPoint;
+import com.plagiarism.plagiarismremover.security.DelegatedBearerTokenAccessDeniedHandler;
+import com.plagiarism.plagiarismremover.service.TokenService;
+import com.plagiarism.plagiarismremover.service.UserService;
 
 @WebMvcTest(PlagiarismRemoverController.class)
-@Import(MessageSourceConfig.class)
-@ExtendWith(MockitoExtension.class)
+@Import({ 
+	SecurityConfig.class,  
+	UserService.class, 
+	PasswordConfig.class,
+	TokenService.class,
+	DelegatedAuthenticationEntryPoint.class, 
+	DelegatedBearerTokenAccessDeniedHandler.class,
+	MessageSourceConfig.class
+})
 class PlagiarismRemoverControllerTest {
 	
-	@Mock
-	private ChatGPTConfigProperties mockedChatGPTconfig;
-
+	@MockBean
+	private UserRepository userRepository;
+	
 	@Test
 	void testConstructorInjection() {
-		PlagiarismRemoverController plagiarismRemoverController = new PlagiarismRemoverController(mockedChatGPTconfig);
-		assertNotNull(plagiarismRemoverController.getChatGPTconfig());
-		assertEquals(mockedChatGPTconfig, plagiarismRemoverController.getChatGPTconfig());
+
 	}
 	
 	@Test

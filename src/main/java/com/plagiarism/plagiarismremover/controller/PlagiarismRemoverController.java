@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.plagiarism.plagiarismremover.config.ChatGPTConfigProperties;
-import com.plagiarism.plagiarismremover.entity.ChatCompletion;
-import com.plagiarism.plagiarismremover.entity.ChatMessageRequest;
+import com.plagiarism.plagiarismremover.config.ChatGPTConfig;
+import com.plagiarism.plagiarismremover.dto.ChatCompletion;
+import com.plagiarism.plagiarismremover.dto.ChatMessageRequest;
 import com.plagiarism.plagiarismremover.service.ChatGPTChatCompletionService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,14 +29,14 @@ import jakarta.validation.Valid;
 @Tag(name = "Plagiarism Remover", description = "Plagiarism Remover API")
 public class PlagiarismRemoverController {
 	
-	private final ChatGPTConfigProperties chatGPTconfig;
+	private final ChatGPTConfig chatGPTconfig;
 	private ChatGPTChatCompletionService chatGPTChatCompletionService;
 
-	public PlagiarismRemoverController(ChatGPTConfigProperties chatGPTconfig) {
+	public PlagiarismRemoverController(ChatGPTConfig chatGPTconfig) {
 		this.chatGPTconfig = chatGPTconfig;
 	}
 
-	public ChatGPTConfigProperties getChatGPTconfig() {
+	public ChatGPTConfig getChatGPTconfig() {
 		return this.chatGPTconfig;
 	}
 	
@@ -44,7 +44,7 @@ public class PlagiarismRemoverController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Removed plagiarism succesfully", content = {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = ChatCompletion.class)) }),
 	})
-	@SecurityRequirement(name = "Bearer Key", scopes = "read")
+	@SecurityRequirement(name = "Bearer Key")
 	@PostMapping("${plagiarism-remover.endpoint.remove}")
 	public ResponseEntity<ChatCompletion> remove( @Valid @RequestBody ChatMessageRequest requestBody) {
 		try {

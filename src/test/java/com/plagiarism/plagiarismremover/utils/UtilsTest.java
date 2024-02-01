@@ -17,8 +17,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class UtilsTest  {
 	
-	private static String userName = "ola";
+	private static String userName = "user";
 	private static String password = "password";
+	
+	private UtilsTest() {
+        // Private constructor to prevent instantiation
+    }
 	
 	public static MockHttpServletResponse mockHttpGetRequest(MockMvc mockMvc, String apiUrl)
 			throws Exception {
@@ -80,6 +84,40 @@ public class UtilsTest  {
 	          .post(apiUrl);
 	
 		String credentials = userName + ":" + password;
+		String base64Credentials = Base64.getEncoder().encodeToString((credentials).getBytes());
+		requestBuilder.header(HttpHeaders.AUTHORIZATION, "Basic " + base64Credentials);
+		
+		// Performing the request and getting the MvcResult
+		MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+		
+		// Extract the response from the MvcResult
+		return mvcResult.getResponse();
+	}
+	
+	public static MockHttpServletResponse mockHttpPostRequestWithBasicAuthBadCredentials(MockMvc mockMvc, String apiUrl)
+			throws Exception {
+
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+	          .post(apiUrl);
+	
+		String credentials = "nonexsistentusername" + ":" + password;
+		String base64Credentials = Base64.getEncoder().encodeToString((credentials).getBytes());
+		requestBuilder.header(HttpHeaders.AUTHORIZATION, "Basic " + base64Credentials);
+		
+		// Performing the request and getting the MvcResult
+		MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+		
+		// Extract the response from the MvcResult
+		return mvcResult.getResponse();
+	}
+	
+	public static MockHttpServletResponse mockHttpPostRequestWithBasicAuthCredentials(MockMvc mockMvc, String apiUrl, String username, String password)
+			throws Exception {
+
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+	          .post(apiUrl);
+	
+		String credentials = username + ":" + password;
 		String base64Credentials = Base64.getEncoder().encodeToString((credentials).getBytes());
 		requestBuilder.header(HttpHeaders.AUTHORIZATION, "Basic " + base64Credentials);
 		

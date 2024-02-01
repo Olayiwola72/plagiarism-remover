@@ -1,11 +1,12 @@
 package com.plagiarism.plagiarismremover.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.plagiarism.plagiarismremover.entity.TokenResponse;
+import com.plagiarism.plagiarismremover.dto.TokenResponse;
 import com.plagiarism.plagiarismremover.service.TokenService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,6 +32,7 @@ public class AuthController {
 			@Content(schema = @Schema(implementation = TokenResponse.class)) }),
 	})
 	@SecurityRequirement(name = "Basic Auth")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("${plagiarism-remover.endpoint.token}")
 	public TokenResponse tokenResponse(Authentication authentication) {
 		String token = tokenService.generateToken(authentication);

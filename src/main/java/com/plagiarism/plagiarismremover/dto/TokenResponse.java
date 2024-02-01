@@ -1,9 +1,7 @@
-package com.plagiarism.plagiarismremover.entity;
+package com.plagiarism.plagiarismremover.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
 
-@Entity
 @Schema(description = "Token Response Information")
 public class TokenResponse {
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "auth token", example = "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoi")

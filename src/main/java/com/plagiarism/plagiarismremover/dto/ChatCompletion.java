@@ -1,13 +1,14 @@
-package com.plagiarism.plagiarismremover.entity;
+package com.plagiarism.plagiarismremover.dto;
 
 import java.util.ArrayList;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-@Entity
 @Schema(description = "Chat Completion Information")
 public class ChatCompletion {
+	@Id
+	
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "model", example = "gpt-3.5-turbo")
 	private String model;
 	

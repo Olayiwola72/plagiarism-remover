@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import com.plagiarism.plagiarismremover.entity.errors.ErrorField;
-import com.plagiarism.plagiarismremover.entity.errors.ErrorResponse;
+import com.plagiarism.plagiarismremover.dto.errors.ErrorField;
+import com.plagiarism.plagiarismremover.dto.errors.ErrorResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -41,6 +43,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+	
+	@ExceptionHandler({ UsernameNotFoundException.class, BadCredentialsException.class })
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorResponse> handleUsernameNotFoundAndBadCredentialsException(Exception ex) {
+        ErrorResponse errorResponse = new ErrorResponse(messageSource.getMessage("username.password.incorrect", null, LocaleContextHolder.getLocale()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)

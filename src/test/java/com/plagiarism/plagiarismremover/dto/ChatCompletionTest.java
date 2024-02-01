@@ -1,4 +1,4 @@
-package com.plagiarism.plagiarismremover.entity;
+package com.plagiarism.plagiarismremover.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

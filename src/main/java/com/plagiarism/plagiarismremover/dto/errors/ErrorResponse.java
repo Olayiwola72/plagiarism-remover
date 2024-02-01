@@ -1,4 +1,4 @@
-package com.plagiarism.plagiarismremover.entity.errors;
+package com.plagiarism.plagiarismremover.dto.errors;
 
 import java.util.ArrayList;
 import java.util.List;

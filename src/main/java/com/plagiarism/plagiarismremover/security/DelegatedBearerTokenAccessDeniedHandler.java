@@ -26,5 +26,5 @@ public class DelegatedBearerTokenAccessDeniedHandler implements AccessDeniedHand
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		resolver.resolveException(request, response, null, accessDeniedException);
 	}
-
+	
 }

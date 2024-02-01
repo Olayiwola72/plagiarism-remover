@@ -1,12 +1,12 @@
 package com.plagiarism.plagiarismremover.service;
 
-import com.plagiarism.plagiarismremover.config.ChatGPTConfigProperties;
-import com.plagiarism.plagiarismremover.entity.ChatCompletion;
+import com.plagiarism.plagiarismremover.config.ChatGPTConfig;
+import com.plagiarism.plagiarismremover.dto.ChatCompletion;
 
 public class ChatGPTChatCompletionService {
 	private final ChatCompletion chatCompletion;
 	
-	public ChatGPTChatCompletionService(ChatGPTConfigProperties chatGPTconfig, String requestMessage){
+	public ChatGPTChatCompletionService(ChatGPTConfig chatGPTconfig, String requestMessage){
 		this.chatCompletion = new ChatCompletion(
 									chatGPTconfig.getModel(),
 									chatGPTconfig.getRole(),
