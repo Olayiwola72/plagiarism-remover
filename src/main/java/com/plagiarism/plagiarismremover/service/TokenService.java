@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TokenService {
-	@Value("${jwt.expires.at.hours}")
-	private long jwtExpiresAt;
+	@Value("${jwt.expires.in.hours}")
+	private long jwtExpiresIn;
 	
 	private final JwtEncoder encoder;
 	
@@ -26,16 +26,17 @@ public class TokenService {
 	public String generateToken(Authentication authentication) {
 		Instant now = Instant.now();
 		
-		String scope = authentication.getAuthorities().stream()
+		//Prepare a claim called authorities
+		String authorities = authentication.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
-				.collect(Collectors.joining(" "));
+				.collect(Collectors.joining(" ")); // Must be space-delimited
 		
 		JwtClaimsSet claims = JwtClaimsSet.builder()
 				.issuer("self")
 				.issuedAt(now)
-				.expiresAt(now.plus(jwtExpiresAt, ChronoUnit.HOURS))
+				.expiresAt(now.plus(jwtExpiresIn, ChronoUnit.HOURS))
 				.subject(authentication.getName())
-				.claim("scope", scope)
+				.claim("authorities", authorities)
 				.build();
 		
 		return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

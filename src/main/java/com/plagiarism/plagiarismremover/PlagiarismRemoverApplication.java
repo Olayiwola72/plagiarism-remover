@@ -7,13 +7,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import com.plagiarism.plagiarismremover.config.ChatGPTConfig;
-import com.plagiarism.plagiarismremover.config.RsaKeyProperties;
+import com.plagiarism.plagiarismremover.config.ChatGPTConfigProperties;
 import com.plagiarism.plagiarismremover.entity.User;
 import com.plagiarism.plagiarismremover.service.UserService;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ ChatGPTConfig.class, RsaKeyProperties.class })
+@EnableConfigurationProperties({ 
+	ChatGPTConfigProperties.class
+})
 public class PlagiarismRemoverApplication implements CommandLineRunner{
 	@Value("${app.admin.username}")
 	private String username;
@@ -26,11 +27,11 @@ public class PlagiarismRemoverApplication implements CommandLineRunner{
 	
 	@Autowired
 	private UserService userService;
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(PlagiarismRemoverApplication.class, args);
 	}
-
+	
 	@Override
 	public void run(String... args) throws Exception {
 		// Create Spring Boot defaut admin user

@@ -2,13 +2,14 @@ package com.plagiarism.plagiarismremover.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.plagiarism.plagiarismremover.config.ChatGPTConfig;
+import com.plagiarism.plagiarismremover.config.ChatGPTConfigProperties;
 import com.plagiarism.plagiarismremover.dto.ChatCompletion;
 import com.plagiarism.plagiarismremover.dto.ChatMessageRequest;
 import com.plagiarism.plagiarismremover.service.ChatGPTChatCompletionService;
@@ -29,14 +30,14 @@ import jakarta.validation.Valid;
 @Tag(name = "Plagiarism Remover", description = "Plagiarism Remover API")
 public class PlagiarismRemoverController {
 	
-	private final ChatGPTConfig chatGPTconfig;
+	private final ChatGPTConfigProperties chatGPTconfig;
 	private ChatGPTChatCompletionService chatGPTChatCompletionService;
 
-	public PlagiarismRemoverController(ChatGPTConfig chatGPTconfig) {
+	public PlagiarismRemoverController(ChatGPTConfigProperties chatGPTconfig) {
 		this.chatGPTconfig = chatGPTconfig;
 	}
 
-	public ChatGPTConfig getChatGPTconfig() {
+	public ChatGPTConfigProperties getChatGPTconfig() {
 		return this.chatGPTconfig;
 	}
 	
@@ -45,6 +46,7 @@ public class PlagiarismRemoverController {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = ChatCompletion.class)) }),
 	})
 	@SecurityRequirement(name = "Bearer Key")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("${plagiarism-remover.endpoint.remove}")
 	public ResponseEntity<ChatCompletion> remove( @Valid @RequestBody ChatMessageRequest requestBody) {
 		try {

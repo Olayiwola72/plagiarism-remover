@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Error Response Information")
 public class ErrorResponse {
 	@Schema(description = "errors")
-	private List<ErrorField> errors;
+	private List<ErrorInfo> errors;
 
     public ErrorResponse() {
         this.errors = new ArrayList<>();
@@ -16,21 +16,21 @@ public class ErrorResponse {
     
     public ErrorResponse(String errorMessage) {
         this();
-        ErrorField errorField = new ErrorField(errorMessage);
-        this.addErrors(errorField);
+        ErrorInfo errorInfo = new ErrorField(errorMessage);
+        this.addErrors(errorInfo);
     }
 
     public ErrorResponse(String errorMessage, String fieldName) {
         this();
-        ErrorField errorField = new ErrorField(errorMessage, fieldName);
-        this.addErrors(errorField);
+        ErrorInfo errorInfo = new ErrorField(errorMessage, fieldName);
+        this.addErrors(errorInfo);
     }
 
-    public List<ErrorField> getErrors() {
+    public List<ErrorInfo> getErrors() {
         return this.errors;
     }
 
-    public void addErrors(ErrorField errorField) {
-        this.errors.add(errorField);
+    public void addErrors(ErrorInfo errorInfo) {
+        this.errors.add(errorInfo);
     }
 }

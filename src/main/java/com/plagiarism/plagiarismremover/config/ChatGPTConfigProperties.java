@@ -3,7 +3,7 @@ package com.plagiarism.plagiarismremover.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "openai")
-public class ChatGPTConfig {
+public class ChatGPTConfigProperties {
 	private String apiUrl;
 	private String apiKey;
 	private String model;

@@ -3,7 +3,7 @@ package com.plagiarism.plagiarismremover.dto.errors;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Error Response Field Information")
-public class ErrorField {
+public class ErrorField implements ErrorInfo {
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "error Message", example = "field cannot be blank")
 	private String errorMessage;
 	
@@ -19,16 +19,20 @@ public class ErrorField {
 		this.setFieldName(fieldName);
 	}
 	
+	@Override
 	public String getErrorMessage() {
 		return errorMessage;
 	}
+	
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
 	
+	@Override
 	public String getFieldName() {
 		return fieldName;
 	}
+	
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
