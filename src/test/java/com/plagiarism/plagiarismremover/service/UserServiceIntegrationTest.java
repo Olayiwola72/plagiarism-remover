@@ -22,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import com.plagiarism.plagiarismremover.adapter.UserPrincipal;
 import com.plagiarism.plagiarismremover.config.TestConfig;
 import com.plagiarism.plagiarismremover.config.PasswordConfig;
+import com.plagiarism.plagiarismremover.config.RsaKeyConfig;
 import com.plagiarism.plagiarismremover.config.SecurityConfig;
 import com.plagiarism.plagiarismremover.entity.User;
 import com.plagiarism.plagiarismremover.repository.UserRepository;
@@ -31,7 +32,8 @@ import com.plagiarism.plagiarismremover.security.DelegatedBearerTokenAccessDenie
 @DataJpaTest
 @ContextConfiguration(classes = TestConfig.class)
 @Import({ 
-	SecurityConfig.class,  
+	SecurityConfig.class,
+	RsaKeyConfig.class,
 	UserService.class,
 	PasswordConfig.class,
 	DelegatedAuthenticationEntryPoint.class, 

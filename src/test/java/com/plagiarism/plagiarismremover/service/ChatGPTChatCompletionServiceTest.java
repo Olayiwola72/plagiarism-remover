@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.plagiarism.plagiarismremover.config.ChatGPTConfig;
+import com.plagiarism.plagiarismremover.config.ChatGPTConfigProperties;
 
 @SpringBootTest
 class ChatGPTChatCompletionServiceTest {
@@ -15,13 +15,13 @@ class ChatGPTChatCompletionServiceTest {
 	void testChatGPTConfigPropertiesAndRequestMessageConstructor() {
         String requestMessage = "TestRequest";
 		// Mocking necessary dependencies or providing appropriate values for testing
-        ChatGPTConfig chatGPTConfig = new ChatGPTConfig();
-        chatGPTConfig.setModel("TestModel");
-        chatGPTConfig.setRole("TestRole");
-        chatGPTConfig.setInstruction("TestInstruction:");
+        ChatGPTConfigProperties chatGPTConfigProperties = new ChatGPTConfigProperties();
+        chatGPTConfigProperties.setModel("TestModel");
+        chatGPTConfigProperties.setRole("TestRole");
+        chatGPTConfigProperties.setInstruction("TestInstruction:");
 
         // Creating an instance of the service
-        ChatGPTChatCompletionService chatCompletionService = new ChatGPTChatCompletionService(chatGPTConfig, requestMessage);
+        ChatGPTChatCompletionService chatCompletionService = new ChatGPTChatCompletionService(chatGPTConfigProperties, requestMessage);
         
         // Accessing the ChatCompletion instance and asserting its values
         assertNotNull(chatCompletionService.getChatCompletion());

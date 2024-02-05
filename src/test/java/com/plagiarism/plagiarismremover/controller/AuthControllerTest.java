@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plagiarism.plagiarismremover.config.MessageSourceConfig;
 import com.plagiarism.plagiarismremover.config.PasswordConfig;
+import com.plagiarism.plagiarismremover.config.RsaKeyConfig;
 import com.plagiarism.plagiarismremover.config.SecurityConfig;
 import com.plagiarism.plagiarismremover.repository.UserRepository;
 import com.plagiarism.plagiarismremover.security.DelegatedAuthenticationEntryPoint;
@@ -29,6 +30,7 @@ import com.plagiarism.plagiarismremover.utils.UtilsTest;
 @WebMvcTest({ AuthController.class })
 @Import({ 
 	SecurityConfig.class,  
+	RsaKeyConfig.class,
 	UserService.class, 
 	PasswordConfig.class,
 	TokenService.class,

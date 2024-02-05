@@ -19,9 +19,9 @@ class ErrorResponseTest {
 	@Test
 	void testMessageConstructor() {
 		ErrorResponse errorResponse = new ErrorResponse();
-		ErrorField errorField = new ErrorField("errorMessage");
+		ErrorInfo errorInfo = new ErrorField("errorMessage");
 		
-		errorResponse.addErrors(errorField);	
+		errorResponse.addErrors(errorInfo);	
 		assertEquals(1, errorResponse.getErrors().size());
 		
 		assertEquals(errorResponse.getErrors().get(0).getErrorMessage(), "errorMessage");
@@ -36,11 +36,11 @@ class ErrorResponseTest {
 	@Test
 	void testGetAddErrorFields() {
 		ErrorResponse errorResponse = new ErrorResponse();
-		ErrorField errorField = new ErrorField("errorMessage","fieldName");
+		ErrorInfo errorInfo = new ErrorField("errorMessage","fieldName");
 		
 		testDefaultConstructor();
 		
-		errorResponse.addErrors(errorField);	
+		errorResponse.addErrors(errorInfo);	
 		assertEquals(1, errorResponse.getErrors().size());
 		
 		assertEquals(errorResponse.getErrors().get(0).getErrorMessage(), "errorMessage");

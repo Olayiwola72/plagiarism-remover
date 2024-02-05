@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.plagiarism.plagiarismremover.config.PasswordConfig;
+import com.plagiarism.plagiarismremover.config.RsaKeyConfig;
 import com.plagiarism.plagiarismremover.config.SecurityConfig;
 import com.plagiarism.plagiarismremover.config.TestConfig;
 import com.plagiarism.plagiarismremover.entity.User;
@@ -24,6 +25,7 @@ import com.plagiarism.plagiarismremover.service.UserService;
 @ContextConfiguration(classes = TestConfig.class)
 @Import({ 
 	SecurityConfig.class,  
+	RsaKeyConfig.class,
 	PasswordConfig.class,
 	UserService.class, 
 	DelegatedAuthenticationEntryPoint.class, 
