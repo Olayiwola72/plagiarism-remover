@@ -1,4 +1,4 @@
-package com.plagiarism.plagiarismremover.config;
+package com.plagiarism.plagiarismremover.utils;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.TestConfiguration;

@@ -14,11 +14,18 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 @OpenAPIDefinition
 @Configuration
 public class OpenApiConfig {   
-	@Value("${bearer.security.scheme.name}")
+
 	private String bearerSecuritySchemeName;
 	
-	@Value("${basic.security.scheme.name}")
 	private String basicSecuritySchemeName;
+	
+	public OpenApiConfig(
+			@Value("${bearer.security.scheme.name}") String bearerSecuritySchemeName,
+			@Value("${basic.security.scheme.name}") String basicSecuritySchemeName
+			) {
+		this.bearerSecuritySchemeName = bearerSecuritySchemeName;
+		this.basicSecuritySchemeName = basicSecuritySchemeName;
+	}
     
 	@Bean
     public OpenAPI baseOpenAPI(){
@@ -28,20 +35,21 @@ public class OpenApiConfig {
                         .version("1.0.0")
                         .description("OpenAPI Docs Description")
                 )
-                .addSecurityItem(new SecurityRequirement().addList(bearerSecuritySchemeName).addList(basicSecuritySchemeName))
+                .addSecurityItem(new SecurityRequirement().addList(this.bearerSecuritySchemeName).addList(this.basicSecuritySchemeName))
                 .components(new Components()
-                        .addSecuritySchemes(bearerSecuritySchemeName,
+                        .addSecuritySchemes(this.bearerSecuritySchemeName,
                                 new SecurityScheme()
-                                        .name(bearerSecuritySchemeName)
+                                        .name(this.bearerSecuritySchemeName)
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT"))
-                        .addSecuritySchemes(basicSecuritySchemeName,
+                        .addSecuritySchemes(this.basicSecuritySchemeName,
                                 new SecurityScheme()
-                                        .name(basicSecuritySchemeName)
+                                        .name(this.basicSecuritySchemeName)
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("basic")
                         )
                 );
     }
+	
 }

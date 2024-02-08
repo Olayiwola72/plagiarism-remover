@@ -8,9 +8,9 @@ public class ChatGPTChatCompletionService {
 	
 	public ChatGPTChatCompletionService(ChatGPTConfigProperties chatGPTconfig, String requestMessage){
 		this.chatCompletion = new ChatCompletion(
-									chatGPTconfig.getModel(),
-									chatGPTconfig.getRole(),
-									chatGPTconfig.getInstruction() +" "+ requestMessage
+									chatGPTconfig.model(),
+									chatGPTconfig.role(),
+									chatGPTconfig.instruction() +" "+ requestMessage
 								);
 	}
 	

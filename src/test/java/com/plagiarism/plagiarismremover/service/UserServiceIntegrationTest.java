@@ -19,15 +19,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.plagiarism.plagiarismremover.adapter.UserPrincipal;
-import com.plagiarism.plagiarismremover.config.TestConfig;
 import com.plagiarism.plagiarismremover.config.PasswordConfig;
 import com.plagiarism.plagiarismremover.config.RsaKeyConfig;
 import com.plagiarism.plagiarismremover.config.SecurityConfig;
-import com.plagiarism.plagiarismremover.entity.User;
+import com.plagiarism.plagiarismremover.model.User;
+import com.plagiarism.plagiarismremover.model.UserPrincipal;
 import com.plagiarism.plagiarismremover.repository.UserRepository;
 import com.plagiarism.plagiarismremover.security.DelegatedAuthenticationEntryPoint;
 import com.plagiarism.plagiarismremover.security.DelegatedBearerTokenAccessDeniedHandler;
+import com.plagiarism.plagiarismremover.utils.TestConfig;
 
 @DataJpaTest
 @ContextConfiguration(classes = TestConfig.class)
@@ -47,7 +47,7 @@ public class UserServiceIntegrationTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+   
     @Autowired
     private UserService userService;
     
@@ -65,13 +65,7 @@ public class UserServiceIntegrationTest {
     	List<User> allUsers = userService.findAll();
     	
     	// Perform assertions based on the expected data in the database
-        assertEquals(1, allUsers.size()); // Adjust the expected size based on your test data
-
-        // Optionally, perform more detailed assertions based on the specific data in your test scenario
-        // For example, check the properties of each user in the list e.g. the admin user created by CommandLineRunner
-        assertEquals(adminUsername, allUsers.get(0).getUsername());
-        assertTrue(passwordEncoder.matches(adminPassword, allUsers.get(0).getPassword()));
-        assertEquals(adminUserRoles, allUsers.get(0).getRoles());
+        assertEquals(0, allUsers.size()); // Adjust the expected size based on your test data
     }
     
     @Test

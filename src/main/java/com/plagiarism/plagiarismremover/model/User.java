@@ -1,4 +1,4 @@
-package com.plagiarism.plagiarismremover.entity;
+package com.plagiarism.plagiarismremover.model;
 
 import java.io.Serializable;
 

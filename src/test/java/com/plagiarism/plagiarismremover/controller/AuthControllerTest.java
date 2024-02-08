@@ -52,6 +52,12 @@ class AuthControllerTest {
 	@Value("${plagiarism-remover.base-path}")
     private String basePath;
 	
+	@Value("${app.admin.username}") 
+	private String username;
+	
+	@Value("${app.admin.password}") 
+	private String password;
+	
 	@Test
 	void unauthenticatedRequestShouldReturnUnauthorized401() throws Exception {
 		MockHttpServletResponse response = UtilsTest.mockHttpGetRequest(mockMvc, "/");

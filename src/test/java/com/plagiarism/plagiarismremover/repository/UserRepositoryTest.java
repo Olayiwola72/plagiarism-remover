@@ -15,11 +15,11 @@ import org.springframework.test.context.ContextConfiguration;
 import com.plagiarism.plagiarismremover.config.PasswordConfig;
 import com.plagiarism.plagiarismremover.config.RsaKeyConfig;
 import com.plagiarism.plagiarismremover.config.SecurityConfig;
-import com.plagiarism.plagiarismremover.config.TestConfig;
-import com.plagiarism.plagiarismremover.entity.User;
+import com.plagiarism.plagiarismremover.model.User;
 import com.plagiarism.plagiarismremover.security.DelegatedAuthenticationEntryPoint;
 import com.plagiarism.plagiarismremover.security.DelegatedBearerTokenAccessDeniedHandler;
 import com.plagiarism.plagiarismremover.service.UserService;
+import com.plagiarism.plagiarismremover.utils.TestConfig;
 
 @DataJpaTest
 @ContextConfiguration(classes = TestConfig.class)

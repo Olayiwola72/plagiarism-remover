@@ -81,6 +81,7 @@ public class SecurityConfig {
 				            .ignoringRequestMatchers(authWhitelistUrls)
 				            .disable()
 				       )
+				.userDetailsService(userService)
 				.headers(headers -> headers.frameOptions(FrameOptionsConfig::disable)) // This is for H2 Browser Console Access
 				.cors(Customizer.withDefaults()) // by default use a bean by the name of corsConfigurationSource
 				.httpBasic(basic -> basic

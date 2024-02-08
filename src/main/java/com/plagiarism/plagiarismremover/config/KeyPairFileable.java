@@ -2,7 +2,6 @@ package com.plagiarism.plagiarismremover.config;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
@@ -17,8 +16,12 @@ import java.util.Base64;
 import org.apache.commons.io.FileUtils;
 
 public interface KeyPairFileable {
-	default PublicKey getPublicKeyFromFile(URI uri) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        byte[] keyBytes = Files.readAllBytes(Paths.get(uri));
+	default boolean areKeyFilesExist(String publicKeyPath, String privateKeyPath) {
+		return Files.exists(Paths.get(publicKeyPath)) && Files.exists(Paths.get(privateKeyPath));
+	}
+	
+	default PublicKey getPublicKeyFromFile(String publicKeyPath) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] keyBytes = Files.readAllBytes(Paths.get(publicKeyPath));
         String keyString = new String(keyBytes);
 
         // Decode the Base64 encoded key
@@ -30,14 +33,14 @@ public interface KeyPairFileable {
         return keyFactory.generatePublic(keySpec);
     }
 	
-	default void writePublicKeyToPemFile(PublicKey publicKey, URI fileName) throws Exception {
+	default void writePublicKeyToPemFile(PublicKey publicKey, String publicKeyPath) throws Exception {
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKey.getEncoded());
         String pem = Base64.getEncoder().encodeToString(keySpec.getEncoded());
-        writePemFile(pem, fileName);
+        writePemFile(pem, publicKeyPath);
     }
 	
-	default PrivateKey getPrivateKeyFromFile(URI uri) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        byte[] keyBytes = Files.readAllBytes(Paths.get(uri));
+	default PrivateKey getPrivateKeyFromFile(String privateKeyPath) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] keyBytes = Files.readAllBytes(Paths.get(privateKeyPath));
         String keyString = new String(keyBytes);
 
         // Decode the Base64 encoded key
@@ -49,14 +52,16 @@ public interface KeyPairFileable {
         return keyFactory.generatePrivate(keySpec);
     }
 
-	default void writePrivateKeyToPemFile(PrivateKey privateKey, URI uri) throws Exception {
+	default void writePrivateKeyToPemFile(PrivateKey privateKey, String privateKeyPath) throws Exception {
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKey.getEncoded());
         String pem = Base64.getEncoder().encodeToString(keySpec.getEncoded());
-        writePemFile(pem, uri);
+        writePemFile(pem, privateKeyPath);
     }
 
-	default void writePemFile(String pem, URI uri) throws Exception {
-        File file = new File(uri);
-        FileUtils.writeStringToFile(file, pem, "UTF-8");
+	default void writePemFile(String pem, String filepath) throws Exception {
+		File file = new File(filepath);
+		FileUtils.writeStringToFile(file, pem, "UTF-8");
     }
+	
+	
 }

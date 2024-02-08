@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.plagiarism.plagiarismremover.adapter.UserPrincipal;
-import com.plagiarism.plagiarismremover.entity.User;
+import com.plagiarism.plagiarismremover.model.User;
+import com.plagiarism.plagiarismremover.model.UserPrincipal;
 import com.plagiarism.plagiarismremover.repository.UserRepository;
 
 @Service

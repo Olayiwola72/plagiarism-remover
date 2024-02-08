@@ -1,4 +1,4 @@
-package com.plagiarism.plagiarismremover.adapter;
+package com.plagiarism.plagiarismremover.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
-
-import com.plagiarism.plagiarismremover.entity.User;
 
 public class UserPrincipalTest {
 	

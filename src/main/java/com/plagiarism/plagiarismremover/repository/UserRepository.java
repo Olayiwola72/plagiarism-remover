@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.plagiarism.plagiarismremover.entity.User;
+import com.plagiarism.plagiarismremover.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

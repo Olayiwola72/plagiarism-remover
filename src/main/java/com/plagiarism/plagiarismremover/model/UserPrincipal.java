@@ -1,4 +1,4 @@
-package com.plagiarism.plagiarismremover.adapter;
+package com.plagiarism.plagiarismremover.model;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,8 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
-
-import com.plagiarism.plagiarismremover.entity.User;
 
 public class UserPrincipal implements UserDetails {
 	

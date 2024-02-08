@@ -37,4 +37,5 @@ public class MessageSourceConfig {
 		localeResolver.setDefaultLocale(Locale.US);
 		return localeResolver;
 	}
+	
 }

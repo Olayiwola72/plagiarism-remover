@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.plagiarism.plagiarismremover.entity.User;
+import com.plagiarism.plagiarismremover.model.User;
 import com.plagiarism.plagiarismremover.service.UserService;
 import com.plagiarism.plagiarismremover.utils.UtilsTest;
 
@@ -32,19 +32,6 @@ import com.plagiarism.plagiarismremover.utils.UtilsTest;
 @ExtendWith(MockitoExtension.class)
 @TestPropertySource(locations = {"classpath:messages.properties"})
 class GlobalExceptionHandlerTest {
-	
-	@Autowired
-    private MockMvc mockMvc;
-	
-	@Autowired
-    private UserService userService;
-
-    @Mock
-    private ReloadableResourceBundleMessageSource messageSource;
-
-    @InjectMocks
-    private GlobalExceptionHandler globalExceptionHandler;
-    
     @Value("${json.invalid.format}")
     private String expectedJsonInvalidFormatErrorMessage;
 
@@ -60,29 +47,24 @@ class GlobalExceptionHandlerTest {
     @Value("${plagiarism-remover.endpoint.internal-server-error}")
     private String internalServerErrorEndPoint;
     
- // User for tests
-//    private User testUser;
+    @Value("${app.admin.username}") 
+	private String username;
+	
+	@Value("${app.admin.password}") 
+	private String password;
+	
+	@Autowired
+    private MockMvc mockMvc;
+	
+	@Autowired
+    private UserService userService;
 
-//    @BeforeAll
-//    static void setUpOnce() {
-//        // Create a test user before each test
-//        testUser = new User();
-//        testUser.setUsername("username");
-//        testUser.setPassword("password");
-//        testUser.setRoles("USER");
-//
-//        userService.create(testUser);
-//    }
-    
-//    @BeforeAll
-//    void setUpOnce() {
-//        // Create the test user once for all tests
-//        testUser = new User();
-//        testUser.setUsername("username");
-//        testUser.setPassword("password");
-//        testUser.setRoles("USER");
-//    }
-    
+    @Mock
+    private ReloadableResourceBundleMessageSource messageSource;
+
+    @InjectMocks
+    private GlobalExceptionHandler globalExceptionHandler;
+
     @Test
     void handleAuthenticationException() throws Exception {
 		String token = "invalid token";
@@ -121,7 +103,7 @@ class GlobalExceptionHandlerTest {
     	String apiUrl = basePath + tokenEndpoint;
 		
         // Simulating a sample AccessDeniedException
-        MockHttpServletResponse response = UtilsTest.mockHttpPostRequestWithBasicAuthCredentials(mockMvc, apiUrl, testUser.getUsername(), "password");
+        MockHttpServletResponse response = UtilsTest.mockHttpPostRequestWithBasicAuth(mockMvc, apiUrl, testUser.getUsername(), "password");
 
         // Validate against the MockHttpServletResponse
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
@@ -145,7 +127,7 @@ class GlobalExceptionHandlerTest {
 		String apiUrl = basePath + tokenEndpoint;
 		
         // Simulating a sample UsernameNotFoundException, BadCredentialsException
-        MockHttpServletResponse response = UtilsTest.mockHttpPostRequestWithBasicAuthBadCredentials(mockMvc, apiUrl);
+        MockHttpServletResponse response = UtilsTest.mockHttpPostRequestWithBasicAuth(mockMvc, apiUrl, "invalidusername", password);
 
         // Validate against the MockHttpServletResponse
         assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
@@ -167,7 +149,7 @@ class GlobalExceptionHandlerTest {
     
 	@Test
     void handleMethodArgumentNotValid() throws Exception {
-		String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint);
+		String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint, username, password);
 		String apiUrl = basePath + removeEndpoint;
 		
         // Simulating a sample MethodArgumentNotValidException
@@ -193,7 +175,7 @@ class GlobalExceptionHandlerTest {
 	
 	@Test
     void handleHttpMessageNotReadableException() throws Exception {
-		String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint);
+		String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint, username, password);
 		String apiUrl = basePath + removeEndpoint;
 		
 		// Simulating a sample HttpMessageNotReadableException
@@ -224,7 +206,7 @@ class GlobalExceptionHandlerTest {
 
     @Test
     void handleNoResourceFoundException() throws Exception {
-    	String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint);
+    	String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint, username, password);
     	
         // Simulating a sample NoResourceFoundException
     	MockHttpServletResponse response = UtilsTest.mockHttpGetRequestWithBearerToken(mockMvc, UtilsTest.getNonExistentEndpointPath(), token);
@@ -247,7 +229,7 @@ class GlobalExceptionHandlerTest {
     
     @Test
     void handleHttpRequestMethodNotSupportedException() throws Exception {
-    	String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint);
+    	String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint, username, password);
     	String apiUrl = basePath + removeEndpoint;
     	
     	// Simulating a sample HttpRequestMethodNotSupportedException
@@ -271,7 +253,7 @@ class GlobalExceptionHandlerTest {
     
     @Test
     void handleOtherExceptions() throws Exception {
-    	String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint);
+    	String token = UtilsTest.getToken(mockMvc, basePath + tokenEndpoint, username, password);
 		String apiUrl = basePath + internalServerErrorEndPoint;
 		
         // Simulating a sample Exception
